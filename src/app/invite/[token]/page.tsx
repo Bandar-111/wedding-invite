@@ -45,19 +45,23 @@ export default async function InvitePage({
           <div className="pointer-events-none absolute inset-3 rounded-3xl border border-gold/30" />
 
           <div className="relative px-7 py-10 text-center sm:px-10 sm:py-12">
-            <p className="font-serif text-sm tracking-[0.3em] text-gold">
-              بِسْمِ اللهِ الرَّحْمَنِ الرَّحِيمِ
+            <p className="font-serif text-sm leading-7 tracking-wide text-gold">
+              {weddingConfig.topBlessing}
             </p>
 
             <div className="mx-auto my-6 h-px w-16 bg-gold-light" />
 
-            <p className="text-sm leading-7 text-foreground/70">
-              {weddingConfig.hostingFamily}
+            <p className="text-sm leading-7 text-foreground/70">{weddingConfig.introText}</p>
+
+            <p className="mt-5 text-sm leading-7 text-foreground/70">
+              {weddingConfig.hostingTitle}
               <br />
-              يتشرفون بدعوتكم لحضور حفل زفاف
+              <span className="font-serif text-lg text-emerald">{weddingConfig.hostingName}</span>
+              <br />
+              {weddingConfig.invitationLine}
             </p>
 
-            <h1 className="my-5 font-serif text-4xl leading-tight text-emerald sm:text-5xl">
+            <h1 className="my-5 font-serif text-3xl leading-tight text-emerald sm:text-4xl">
               {weddingConfig.groomName}
               <span className="mx-3 text-gold">&</span>
               {weddingConfig.brideName}
@@ -75,28 +79,22 @@ export default async function InvitePage({
               )}
             </div>
 
-            <dl className="mb-8 space-y-3 text-sm">
+            <dl className="mb-6 space-y-3 text-sm">
               <div className="flex items-center justify-between border-b border-black/5 pb-3">
                 <dt className="text-foreground/50">التاريخ</dt>
                 <dd className="font-medium text-foreground">
-                  {weddingConfig.dateHijri}
-                  <span className="block text-xs font-normal text-foreground/50">
-                    {weddingConfig.dateGregorian}
-                  </span>
+                  {weddingConfig.day}
+                  <span className="text-foreground/50"> — </span>
+                  {weddingConfig.date}
                 </dd>
               </div>
               <div className="flex items-center justify-between border-b border-black/5 pb-3">
-                <dt className="text-foreground/50">الوقت</dt>
-                <dd className="font-medium text-foreground">{weddingConfig.time}</dd>
+                <dt className="text-foreground/50">وقت الزفة</dt>
+                <dd className="font-medium text-foreground">{weddingConfig.zaffaTime}</dd>
               </div>
               <div className="flex items-center justify-between">
                 <dt className="text-foreground/50">المكان</dt>
-                <dd className="font-medium text-foreground">
-                  {weddingConfig.venueName}
-                  <span className="block text-xs font-normal text-foreground/50">
-                    {weddingConfig.venueAddress}
-                  </span>
-                </dd>
+                <dd className="font-medium text-foreground">{weddingConfig.venueName}</dd>
               </div>
             </dl>
 
@@ -105,8 +103,17 @@ export default async function InvitePage({
                 href={weddingConfig.venueMapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mb-8 inline-block text-xs font-medium text-emerald underline underline-offset-4"
+                className="mb-8 inline-flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/5 px-4 py-2 text-xs font-medium text-emerald transition hover:bg-emerald/10"
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="h-4 w-4"
+                  aria-hidden="true"
+                >
+                  <path d="M12 2C7.86 2 4.5 5.36 4.5 9.5c0 5.25 6.5 11.5 7.02 11.97a.72.72 0 0 0 .96 0C13 21 19.5 14.75 19.5 9.5 19.5 5.36 16.14 2 12 2Zm0 10.25a2.75 2.75 0 1 1 0-5.5 2.75 2.75 0 0 1 0 5.5Z" />
+                </svg>
                 عرض الموقع على الخريطة
               </a>
             )}
