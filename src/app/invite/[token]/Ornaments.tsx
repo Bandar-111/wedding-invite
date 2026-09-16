@@ -71,6 +71,65 @@ export function Flourish({ className }: { className?: string }) {
   );
 }
 
+// Full-bleed page background: a soft warm wash plus a faint repeating
+// sprig motif (native SVG <pattern>, not a raster image) so it stays
+// crisp and near-weightless while adding depth behind the card.
+export function PageBackground({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <defs>
+        <radialGradient id="bg-wash-top" cx="50%" cy="0%" r="75%">
+          <stop offset="0%" stopColor="#fffdf8" />
+          <stop offset="100%" stopColor="#f3ecdc" />
+        </radialGradient>
+        <radialGradient id="bg-wash-bottom" cx="50%" cy="100%" r="60%">
+          <stop offset="0%" stopColor="var(--olive-light)" stopOpacity="0.16" />
+          <stop offset="100%" stopColor="var(--olive-light)" stopOpacity="0" />
+        </radialGradient>
+        <pattern
+          id="bg-sprig"
+          width="130"
+          height="130"
+          patternUnits="userSpaceOnUse"
+          patternTransform="rotate(14)"
+        >
+          <g strokeLinecap="round" fill="none" opacity="0.55">
+            <path d="M14 118 C 24 106, 26 92, 21 78" stroke="var(--olive)" strokeWidth="1.1" />
+            <ellipse
+              cx="17"
+              cy="96"
+              rx="3.2"
+              ry="1.7"
+              fill="var(--olive)"
+              transform="rotate(35 17 96)"
+              opacity="0.7"
+            />
+            <ellipse
+              cx="24"
+              cy="86"
+              rx="3.2"
+              ry="1.7"
+              fill="var(--olive)"
+              transform="rotate(-25 24 86)"
+              opacity="0.7"
+            />
+          </g>
+          <circle cx="21" cy="76" r="2" fill="var(--gold)" opacity="0.55" />
+        </pattern>
+      </defs>
+
+      <rect width="100%" height="100%" fill="url(#bg-wash-top)" />
+      <rect width="100%" height="100%" fill="url(#bg-wash-bottom)" />
+      <rect width="100%" height="100%" fill="url(#bg-sprig)" />
+    </svg>
+  );
+}
+
 export function Divider() {
   return (
     <div className="mx-auto my-6 flex items-center justify-center gap-2" aria-hidden="true">

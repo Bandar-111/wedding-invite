@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import QRCode from "qrcode";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { weddingConfig } from "@/lib/wedding-config";
-import { FloralCorner, Flourish, Divider } from "./Ornaments";
+import { FloralCorner, Flourish, Divider, PageBackground } from "./Ornaments";
 
 export const dynamic = "force-dynamic";
 
@@ -39,8 +39,10 @@ export default async function InvitePage({
   });
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_#fffdf8,_#f3ecdc)] px-4 py-10 sm:py-16">
-      <div className="mx-auto w-full max-w-md">
+    <main className="relative min-h-screen overflow-hidden bg-cream px-4 py-10 sm:py-16">
+      <PageBackground className="pointer-events-none absolute inset-0 h-full w-full" />
+
+      <div className="relative mx-auto w-full max-w-md">
         <div className="relative overflow-hidden rounded-[28px] border border-gold/40 bg-cream shadow-[0_10px_40px_rgba(18,58,46,0.12)]">
           {/* Corner ornaments */}
           <div className="pointer-events-none absolute inset-3 rounded-3xl border border-gold/30" />
