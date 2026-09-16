@@ -3,7 +3,14 @@ import { headers } from "next/headers";
 import QRCode from "qrcode";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { weddingConfig } from "@/lib/wedding-config";
-import { FloralCorner, Flourish, Divider, PageBackground } from "./Ornaments";
+import {
+  BrushCorner,
+  CalendarIcon,
+  Divider,
+  LocationIcon,
+  PageBackground,
+  QrIcon,
+} from "./Ornaments";
 
 export const dynamic = "force-dynamic";
 
@@ -35,128 +42,165 @@ export default async function InvitePage({
   const qrDataUrl = await QRCode.toDataURL(inviteUrl, {
     margin: 1,
     width: 320,
-    color: { dark: "#123a2e", light: "#faf7f0" },
+    color: { dark: "#123a2e", light: "#f8f2e2" },
   });
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-cream px-4 py-10 sm:py-16">
+    <main className="relative min-h-screen overflow-hidden bg-night px-4 py-12 text-cream sm:py-16">
       <PageBackground className="pointer-events-none absolute inset-0 h-full w-full" />
 
-      <div className="relative mx-auto w-full max-w-md">
-        <div className="relative overflow-hidden rounded-[28px] border border-gold/40 bg-cream shadow-[0_10px_40px_rgba(18,58,46,0.12)]">
-          {/* Corner ornaments */}
-          <div className="pointer-events-none absolute inset-3 rounded-3xl border border-gold/30" />
+      <BrushCorner
+        seed={7}
+        className="pointer-events-none absolute -left-6 -top-6 h-44 w-44 opacity-90 sm:h-56 sm:w-56"
+      />
+      <BrushCorner
+        seed={13}
+        className="pointer-events-none absolute -bottom-6 -right-6 h-44 w-44 rotate-180 opacity-90 sm:h-56 sm:w-56"
+      />
 
-          <FloralCorner className="pointer-events-none absolute right-0 top-0 h-20 w-20 sm:h-24 sm:w-24" />
-          <FloralCorner className="pointer-events-none absolute left-0 top-0 h-20 w-20 -scale-x-100 sm:h-24 sm:w-24" />
-          <FloralCorner className="pointer-events-none absolute bottom-0 left-0 h-20 w-20 rotate-180 sm:h-24 sm:w-24" />
-          <FloralCorner className="pointer-events-none absolute bottom-0 right-0 h-20 w-20 -scale-x-100 rotate-180 sm:h-24 sm:w-24" />
+      <div className="relative mx-auto flex w-full max-w-md flex-col items-center px-2 text-center">
+        <p
+          className="animate-fade-up text-xs uppercase tracking-[0.5em] text-gold/60"
+          style={{ animationDelay: "0.05s" }}
+        >
+          بسم الله
+        </p>
 
-          <div className="relative px-7 py-10 text-center sm:px-10 sm:py-12">
-            <Flourish className="mx-auto mb-3 h-6 w-40 sm:w-48" />
+        <h1
+          className="text-shimmer animate-fade-up mt-3 font-calligraphy text-6xl leading-none sm:text-7xl"
+          style={{ animationDelay: "0.15s" }}
+        >
+          {weddingConfig.pageTitle}
+        </h1>
 
-            <p className="font-serif text-sm leading-7 tracking-wide text-gold">
-              {weddingConfig.topBlessing}
-            </p>
+        <Divider />
 
-            <Divider />
+        <p
+          className="animate-fade-up font-calligraphy text-xl leading-loose text-gold-light sm:text-2xl"
+          style={{ animationDelay: "0.3s" }}
+        >
+          {weddingConfig.topBlessing}
+        </p>
 
-            <p className="text-sm leading-7 text-foreground/70">{weddingConfig.introText}</p>
+        <p
+          className="animate-fade-up mt-6 text-sm leading-8 text-cream/75"
+          style={{ animationDelay: "0.4s" }}
+        >
+          {weddingConfig.introLine}
+        </p>
 
-            <p className="mt-5 text-sm leading-7 text-foreground/70">
-              {weddingConfig.hostingTitle}
-              <br />
-              <span className="font-serif text-lg text-emerald">{weddingConfig.hostingName}</span>
-              <br />
-              {weddingConfig.invitationLine}
-            </p>
+        <h2
+          className="text-shimmer animate-fade-up mt-3 font-calligraphy text-5xl leading-tight sm:text-6xl"
+          style={{ animationDelay: "0.5s" }}
+        >
+          {weddingConfig.eventTitle}
+        </h2>
 
-            <h1 className="my-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-serif text-lg leading-tight text-emerald sm:text-2xl">
-              <span>{weddingConfig.groomName}</span>
-              <span className="text-base sm:text-xl" aria-hidden="true">
-                💍
-              </span>
-              <span>{weddingConfig.brideName}</span>
-            </h1>
+        <p
+          className="animate-fade-up mt-4 text-sm leading-8 text-cream/75"
+          style={{ animationDelay: "0.6s" }}
+        >
+          {weddingConfig.dinnerLine}
+        </p>
 
-            <Divider />
+        <Divider />
 
-            <div className="mb-6 rounded-2xl bg-emerald/5 px-5 py-4">
-              <p className="text-sm text-foreground/60">(المكرمة)</p>
-              <p className="mt-1 font-serif text-2xl text-emerald">{guest.full_name}</p>
-              {guest.number_of_guests > 1 && (
-                <p className="mt-1 text-xs text-foreground/50">
-                  عدد المدعوين: {guest.number_of_guests}
-                </p>
-              )}
-            </div>
-
-            <div className="relative mx-auto w-fit rounded-2xl border border-gold/30 bg-white p-4">
-              <span className="absolute -right-1.5 -top-1.5 h-4 w-4 rounded-tr-lg border-r-2 border-t-2 border-gold" />
-              <span className="absolute -left-1.5 -top-1.5 h-4 w-4 rounded-tl-lg border-l-2 border-t-2 border-gold" />
-              <span className="absolute -bottom-1.5 -right-1.5 h-4 w-4 rounded-br-lg border-b-2 border-r-2 border-gold" />
-              <span className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-bl-lg border-b-2 border-l-2 border-gold" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={qrDataUrl}
-                alt="رمز الدخول الخاص بالدعوة"
-                className="h-40 w-40 sm:h-48 sm:w-48"
-              />
-            </div>
-
-            <div className="mt-4">
-              <p className="text-xs text-foreground/50">أو الرمز المختصر</p>
-              <p className="mt-1 font-serif text-2xl tracking-[0.4em] text-emerald">
-                {guest.short_code}
-              </p>
-            </div>
-
-            <Divider />
-
-            <dl className="mb-6 space-y-3 text-sm">
-              <div className="flex items-center justify-between border-b border-black/5 pb-3">
-                <dt className="text-foreground/50">التاريخ</dt>
-                <dd className="font-medium text-foreground">
-                  {weddingConfig.day}
-                  <span className="text-foreground/50"> — </span>
-                  {weddingConfig.date}
-                </dd>
-              </div>
-              <div className="flex items-center justify-between border-b border-black/5 pb-3">
-                <dt className="text-foreground/50">وقت الزفة</dt>
-                <dd className="font-medium text-foreground">{weddingConfig.zaffaTime}</dd>
-              </div>
-              <div className="flex items-center justify-between">
-                <dt className="text-foreground/50">المكان</dt>
-                <dd className="font-medium text-foreground">{weddingConfig.venueName}</dd>
-              </div>
-            </dl>
-
-            {weddingConfig.venueMapUrl && (
-              <a
-                href={weddingConfig.venueMapUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/5 px-4 py-2 text-xs font-medium text-emerald transition hover:bg-emerald/10"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="h-4 w-4"
-                  aria-hidden="true"
-                >
-                  <path d="M12 2C7.86 2 4.5 5.36 4.5 9.5c0 5.25 6.5 11.5 7.02 11.97a.72.72 0 0 0 .96 0C13 21 19.5 14.75 19.5 9.5 19.5 5.36 16.14 2 12 2Zm0 10.25a2.75 2.75 0 1 1 0-5.5 2.75 2.75 0 0 1 0 5.5Z" />
-                </svg>
-                عرض الموقع على الخريطة
-              </a>
-            )}
-
-            <p className="mt-6 text-xs text-foreground/50">
-              يرجى إحضار هذه الدعوة (رمز QR أو الرمز المختصر) عند الحضور
-            </p>
+        <div
+          className="animate-fade-up flex w-full items-stretch justify-center gap-6 sm:gap-10"
+          style={{ animationDelay: "0.7s" }}
+        >
+          <div className="flex flex-1 flex-col items-center gap-2">
+            <LocationIcon className="h-6 w-6 text-gold" />
+            <span className="text-sm leading-6 text-cream/90">{weddingConfig.venueName}</span>
+          </div>
+          <span className="w-px shrink-0 bg-gold/30" />
+          <div className="flex flex-1 flex-col items-center gap-2">
+            <CalendarIcon className="h-6 w-6 text-gold" />
+            <span className="text-sm leading-6 text-cream/90">{weddingConfig.day}</span>
+            <span className="text-sm leading-6 text-cream/90">{weddingConfig.date}</span>
           </div>
         </div>
+
+        <Divider />
+
+        <div className="animate-fade-up" style={{ animationDelay: "0.8s" }}>
+          <p className="text-xs tracking-[0.4em] text-gold/60">{weddingConfig.hostLabel}</p>
+          <p className="mt-2 font-serif text-xl text-gold-light sm:text-2xl">
+            {weddingConfig.hostName}
+          </p>
+        </div>
+
+        <div
+          className="animate-fade-up mt-8 w-full rounded-2xl border border-gold/25 bg-cream/[0.04] px-5 py-4"
+          style={{ animationDelay: "0.9s" }}
+        >
+          <p className="text-xs text-cream/50">(المكرمة)</p>
+          <p className="mt-1 font-serif text-2xl text-gold-light">
+            {guest.full_name}
+          </p>
+          {guest.number_of_guests > 1 && (
+            <p className="mt-1 text-xs text-cream/50">عدد المدعوين: {guest.number_of_guests}</p>
+          )}
+        </div>
+
+        <div
+          className="animate-fade-up relative mx-auto mt-7 w-fit rounded-2xl border border-gold/40 bg-cream p-4"
+          style={{ animationDelay: "1s" }}
+        >
+          <span className="absolute -right-1.5 -top-1.5 h-4 w-4 rounded-tr-lg border-r-2 border-t-2 border-gold" />
+          <span className="absolute -left-1.5 -top-1.5 h-4 w-4 rounded-tl-lg border-l-2 border-t-2 border-gold" />
+          <span className="absolute -bottom-1.5 -right-1.5 h-4 w-4 rounded-br-lg border-b-2 border-r-2 border-gold" />
+          <span className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-bl-lg border-b-2 border-l-2 border-gold" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={qrDataUrl}
+            alt="رمز الدخول الخاص بالدعوة"
+            className="h-40 w-40 sm:h-48 sm:w-48"
+          />
+        </div>
+
+        <div className="animate-fade-up mt-4" style={{ animationDelay: "1.05s" }}>
+          <p className="text-xs text-cream/50">أو الرمز المختصر</p>
+          <p className="mt-1 font-serif text-2xl tracking-[0.4em] text-gold-light">
+            {guest.short_code}
+          </p>
+        </div>
+
+        <p
+          className="animate-fade-up mt-8 font-calligraphy text-lg leading-loose text-gold-light sm:text-xl"
+          style={{ animationDelay: "1.15s" }}
+        >
+          {weddingConfig.closingLine}
+        </p>
+
+        <div
+          className="animate-fade-up mt-7 flex flex-wrap items-center justify-center gap-3"
+          style={{ animationDelay: "1.25s" }}
+        >
+          {weddingConfig.venueMapUrl && (
+            <a
+              href={weddingConfig.venueMapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-xs font-medium text-gold-light transition hover:bg-gold/20"
+            >
+              <LocationIcon className="h-3.5 w-3.5" />
+              عرض الموقع على الخريطة
+            </a>
+          )}
+          <a
+            href={qrDataUrl}
+            download={`invite-${guest.short_code}.png`}
+            className="inline-flex items-center gap-1.5 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-xs font-medium text-gold-light transition hover:bg-gold/20"
+          >
+            <QrIcon className="h-3.5 w-3.5" />
+            تحميل الباركود
+          </a>
+        </div>
+
+        <p className="animate-fade-up mt-6 text-xs text-cream/40" style={{ animationDelay: "1.3s" }}>
+          يرجى إحضار هذه الدعوة (رمز QR أو الرمز المختصر) عند الحضور
+        </p>
       </div>
     </main>
   );

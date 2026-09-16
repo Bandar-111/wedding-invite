@@ -1,13 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #faf7f0;
-  --foreground: #24291f;
+  --background: #0d2b27;
+  --foreground: #f3ead9;
+  --night: #0d2b27;
+  --night-deep: #081916;
   --emerald: #123a2e;
   --emerald-dark: #0b241c;
-  --gold: #b78a35;
-  --gold-light: #d9b96a;
-  --cream: #faf7f0;
+  --gold: #c9a76b;
+  --gold-light: #e8d6a6;
+  --gold-dark: #7c5f34;
+  --cream: #f6efe0;
   --olive: #7d8a5c;
   --olive-light: #a4ad84;
 }
@@ -15,19 +18,72 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-night: var(--night);
+  --color-night-deep: var(--night-deep);
   --color-emerald: var(--emerald);
   --color-emerald-dark: var(--emerald-dark);
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
   --color-cream: var(--cream);
   --color-olive: var(--olive);
   --color-olive-light: var(--olive-light);
   --font-sans: var(--font-tajawal);
   --font-serif: var(--font-amiri);
+  --font-calligraphy: var(--font-ruqaa);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-tajawal), sans-serif;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer-gold {
+  0% {
+    background-position: -150% 0;
+  }
+  100% {
+    background-position: 250% 0;
+  }
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fade-in-up 0.9s cubic-bezier(0.22, 0.7, 0.32, 1) forwards;
+}
+
+.animate-fade-up.text-shimmer {
+  animation:
+    fade-in-up 0.9s cubic-bezier(0.22, 0.7, 0.32, 1) forwards,
+    shimmer-gold 6s linear infinite;
+}
+
+.text-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    var(--gold-dark) 0%,
+    var(--gold) 22%,
+    var(--gold-light) 40%,
+    #fff8e6 50%,
+    var(--gold-light) 60%,
+    var(--gold) 78%,
+    var(--gold-dark) 100%
+  );
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer-gold 6s linear infinite;
 }

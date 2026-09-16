@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Amiri, Tajawal } from "next/font/google";
+import { Amiri, Aref_Ruqaa, Tajawal } from "next/font/google";
 import "./globals.css";
 
 const amiri = Amiri({
   subsets: ["arabic"],
   weight: ["400", "700"],
   variable: "--font-amiri",
+  display: "swap",
+});
+
+const arefRuqaa = Aref_Ruqaa({
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  variable: "--font-ruqaa",
   display: "swap",
 });
 
@@ -26,7 +33,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={`${amiri.variable} ${tajawal.variable} antialiased`}>
+      <body
+        className={`${amiri.variable} ${arefRuqaa.variable} ${tajawal.variable} antialiased`}
+      >
         {children}
       </body>
     </html>
