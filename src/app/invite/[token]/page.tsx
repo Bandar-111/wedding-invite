@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import QRCode from "qrcode";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { weddingConfig } from "@/lib/wedding-config";
+import FloralCorner from "./FloralCorner";
 
 export const dynamic = "force-dynamic";
 
@@ -44,6 +45,11 @@ export default async function InvitePage({
           {/* Corner ornaments */}
           <div className="pointer-events-none absolute inset-3 rounded-3xl border border-gold/30" />
 
+          <FloralCorner className="pointer-events-none absolute right-0 top-0 h-20 w-20 sm:h-24 sm:w-24" />
+          <FloralCorner className="pointer-events-none absolute left-0 top-0 h-20 w-20 -scale-x-100 sm:h-24 sm:w-24" />
+          <FloralCorner className="pointer-events-none absolute bottom-0 left-0 h-20 w-20 rotate-180 sm:h-24 sm:w-24" />
+          <FloralCorner className="pointer-events-none absolute bottom-0 right-0 h-20 w-20 -scale-x-100 rotate-180 sm:h-24 sm:w-24" />
+
           <div className="relative px-7 py-10 text-center sm:px-10 sm:py-12">
             <p className="font-serif text-sm leading-7 tracking-wide text-gold">
               {weddingConfig.topBlessing}
@@ -61,16 +67,18 @@ export default async function InvitePage({
               {weddingConfig.invitationLine}
             </p>
 
-            <h1 className="my-5 font-serif text-3xl leading-tight text-emerald sm:text-4xl">
-              {weddingConfig.groomName}
-              <span className="mx-3 text-gold">&</span>
-              {weddingConfig.brideName}
+            <h1 className="my-5 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 font-serif text-lg leading-tight text-emerald sm:text-2xl">
+              <span>{weddingConfig.groomName}</span>
+              <span className="text-base sm:text-xl" aria-hidden="true">
+                💍
+              </span>
+              <span>{weddingConfig.brideName}</span>
             </h1>
 
             <div className="mx-auto my-6 h-px w-16 bg-gold-light" />
 
             <div className="mb-6 rounded-2xl bg-emerald/5 px-5 py-4">
-              <p className="text-sm text-foreground/60">عزيزنا الضيف</p>
+              <p className="text-sm text-foreground/60">(المكرم/ـة)</p>
               <p className="mt-1 font-serif text-2xl text-emerald">{guest.full_name}</p>
               {guest.number_of_guests > 1 && (
                 <p className="mt-1 text-xs text-foreground/50">

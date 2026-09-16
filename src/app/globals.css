@@ -8,6 +8,8 @@
   --gold: #b78a35;
   --gold-light: #d9b96a;
   --cream: #faf7f0;
+  --olive: #7d8a5c;
+  --olive-light: #a4ad84;
 }
 
 @theme inline {
@@ -18,6 +20,8 @@
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
   --color-cream: var(--cream);
+  --color-olive: var(--olive);
+  --color-olive-light: var(--olive-light);
   --font-sans: var(--font-tajawal);
   --font-serif: var(--font-amiri);
 }
