@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import QRCode from "qrcode";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { weddingConfig } from "@/lib/wedding-config";
-import FloralCorner from "./FloralCorner";
+import { FloralCorner, Flourish, Divider } from "./Ornaments";
 
 export const dynamic = "force-dynamic";
 
@@ -51,11 +51,13 @@ export default async function InvitePage({
           <FloralCorner className="pointer-events-none absolute bottom-0 right-0 h-20 w-20 -scale-x-100 rotate-180 sm:h-24 sm:w-24" />
 
           <div className="relative px-7 py-10 text-center sm:px-10 sm:py-12">
+            <Flourish className="mx-auto mb-3 h-6 w-40 sm:w-48" />
+
             <p className="font-serif text-sm leading-7 tracking-wide text-gold">
               {weddingConfig.topBlessing}
             </p>
 
-            <div className="mx-auto my-6 h-px w-16 bg-gold-light" />
+            <Divider />
 
             <p className="text-sm leading-7 text-foreground/70">{weddingConfig.introText}</p>
 
@@ -75,10 +77,10 @@ export default async function InvitePage({
               <span>{weddingConfig.brideName}</span>
             </h1>
 
-            <div className="mx-auto my-6 h-px w-16 bg-gold-light" />
+            <Divider />
 
             <div className="mb-6 rounded-2xl bg-emerald/5 px-5 py-4">
-              <p className="text-sm text-foreground/60">(المكرم/ـة)</p>
+              <p className="text-sm text-foreground/60">(المكرمة)</p>
               <p className="mt-1 font-serif text-2xl text-emerald">{guest.full_name}</p>
               {guest.number_of_guests > 1 && (
                 <p className="mt-1 text-xs text-foreground/50">
@@ -86,6 +88,28 @@ export default async function InvitePage({
                 </p>
               )}
             </div>
+
+            <div className="relative mx-auto w-fit rounded-2xl border border-gold/30 bg-white p-4">
+              <span className="absolute -right-1.5 -top-1.5 h-4 w-4 rounded-tr-lg border-r-2 border-t-2 border-gold" />
+              <span className="absolute -left-1.5 -top-1.5 h-4 w-4 rounded-tl-lg border-l-2 border-t-2 border-gold" />
+              <span className="absolute -bottom-1.5 -right-1.5 h-4 w-4 rounded-br-lg border-b-2 border-r-2 border-gold" />
+              <span className="absolute -bottom-1.5 -left-1.5 h-4 w-4 rounded-bl-lg border-b-2 border-l-2 border-gold" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={qrDataUrl}
+                alt="رمز الدخول الخاص بالدعوة"
+                className="h-40 w-40 sm:h-48 sm:w-48"
+              />
+            </div>
+
+            <div className="mt-4">
+              <p className="text-xs text-foreground/50">أو الرمز المختصر</p>
+              <p className="mt-1 font-serif text-2xl tracking-[0.4em] text-emerald">
+                {guest.short_code}
+              </p>
+            </div>
+
+            <Divider />
 
             <dl className="mb-6 space-y-3 text-sm">
               <div className="flex items-center justify-between border-b border-black/5 pb-3">
@@ -111,7 +135,7 @@ export default async function InvitePage({
                 href={weddingConfig.venueMapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mb-8 inline-flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/5 px-4 py-2 text-xs font-medium text-emerald transition hover:bg-emerald/10"
+                className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/5 px-4 py-2 text-xs font-medium text-emerald transition hover:bg-emerald/10"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -126,23 +150,7 @@ export default async function InvitePage({
               </a>
             )}
 
-            <div className="mx-auto w-fit rounded-2xl border border-gold/30 bg-white p-4">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={qrDataUrl}
-                alt="رمز الدخول الخاص بالدعوة"
-                className="h-40 w-40 sm:h-48 sm:w-48"
-              />
-            </div>
-
-            <div className="mt-4">
-              <p className="text-xs text-foreground/50">أو الرمز المختصر</p>
-              <p className="mt-1 font-serif text-2xl tracking-[0.4em] text-emerald">
-                {guest.short_code}
-              </p>
-            </div>
-
-            <p className="mt-4 text-xs text-foreground/50">
+            <p className="mt-6 text-xs text-foreground/50">
               يرجى إحضار هذه الدعوة (رمز QR أو الرمز المختصر) عند الحضور
             </p>
           </div>
