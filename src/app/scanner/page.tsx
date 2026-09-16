@@ -33,6 +33,7 @@ export default function ScannerPage() {
 
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [result, setResult] = useState<ScanResult | null>(null);
+  const [manualCode, setManualCode] = useState("");
 
   const resume = useCallback(() => {
     setResult(null);
@@ -48,6 +49,11 @@ export default function ScannerPage() {
     async (decodedText: string) => {
       if (processingRef.current) return;
       processingRef.current = true;
+
+      if (resumeTimerRef.current) {
+        clearTimeout(resumeTimerRef.current);
+        resumeTimerRef.current = null;
+      }
 
       try {
         scannerRef.current?.pause(true);
@@ -118,6 +124,14 @@ export default function ScannerPage() {
     };
   }, [handleScan]);
 
+  function handleManualSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const code = manualCode.trim();
+    if (!code) return;
+    setManualCode("");
+    void handleScan(code);
+  }
+
   async function handleLogout() {
     await fetch("/api/logout", { method: "POST" });
     router.replace("/scanner/login");
@@ -134,6 +148,25 @@ export default function ScannerPage() {
       </header>
 
       <div className="mx-auto w-full max-w-md flex-1 px-4 pb-6">
+        <div className="mb-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+          <p className="mb-2 text-center text-sm text-white/60">أو أدخل الرمز يدويًا</p>
+          <form onSubmit={handleManualSubmit} className="flex gap-2">
+            <input
+              value={manualCode}
+              onChange={(e) => setManualCode(e.target.value)}
+              placeholder="مثال: K7P2XQ"
+              className="min-w-0 flex-1 rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-center text-base tracking-[0.3em] text-white placeholder:tracking-normal placeholder:text-white/30 focus:border-gold focus:outline-none"
+            />
+            <button
+              type="submit"
+              disabled={!manualCode.trim()}
+              className="shrink-0 rounded-lg bg-gold px-4 py-2.5 text-sm font-medium text-emerald-dark transition hover:bg-gold-light disabled:opacity-40"
+            >
+              تأكيد
+            </button>
+          </form>
+        </div>
+
         <div className="overflow-hidden rounded-2xl border border-white/10 bg-black">
           <div id={SCANNER_ELEMENT_ID} className="w-full" />
         </div>

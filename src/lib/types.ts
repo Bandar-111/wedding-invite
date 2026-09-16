@@ -4,6 +4,7 @@ export interface Guest {
   phone: string;
   number_of_guests: number;
   qr_token: string;
+  short_code: string;
   checked_in: boolean;
   checked_in_at: string | null;
   notes: string | null;

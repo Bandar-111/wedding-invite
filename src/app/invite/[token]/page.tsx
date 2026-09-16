@@ -23,7 +23,7 @@ export default async function InvitePage({
 
   const { data: guest } = await supabase
     .from("guests")
-    .select("full_name, number_of_guests, qr_token")
+    .select("full_name, number_of_guests, qr_token, short_code")
     .eq("qr_token", token)
     .maybeSingle();
 
@@ -119,8 +119,16 @@ export default async function InvitePage({
                 className="h-40 w-40 sm:h-48 sm:w-48"
               />
             </div>
-            <p className="mt-3 text-xs text-foreground/50">
-              يرجى إحضار هذه الدعوة (رمز QR) عند الحضور
+
+            <div className="mt-4">
+              <p className="text-xs text-foreground/50">أو الرمز المختصر</p>
+              <p className="mt-1 font-serif text-2xl tracking-[0.4em] text-emerald">
+                {guest.short_code}
+              </p>
+            </div>
+
+            <p className="mt-4 text-xs text-foreground/50">
+              يرجى إحضار هذه الدعوة (رمز QR أو الرمز المختصر) عند الحضور
             </p>
           </div>
         </div>
