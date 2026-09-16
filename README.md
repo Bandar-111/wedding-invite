@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# دعوة الزفاف — Wedding Invitation System
 
-## Getting Started
+A simple digital wedding invitation system: add guests, generate a unique QR
+invitation for each, share it over WhatsApp, and check guests in at the door
+by scanning their QR code.
 
-First, run the development server:
+## Stack
+
+Next.js (App Router) · TypeScript · Tailwind CSS · Supabase (Postgres) ·
+`qrcode` · `html5-qrcode` · deployed on Vercel.
+
+## Routes
+
+- `/admin` — dashboard (add/edit/delete/search guests, share links, stats). Protected by `ADMIN_PASSWORD`.
+- `/invite/[token]` — a guest's personal invitation page with their QR code.
+- `/scanner` — entrance check-in scanner. Protected by a separate `STAFF_PASSCODE` so door staff don't need the admin password.
+
+## Local setup
 
 ```bash
+npm install
+cp .env.local.example .env.local   # then fill in the values below
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment variables (`.env.local`)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Where to get it |
+| --- | --- |
+| `SUPABASE_URL` | Supabase → Project Settings → API |
+| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Project Settings → API (service_role, never expose to the client) |
+| `ADMIN_PASSWORD` | Pick your own — protects `/admin` |
+| `STAFF_PASSCODE` | Pick your own — protects `/scanner` |
+| `SESSION_SECRET` | Generate with `openssl rand -hex 32` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Database
 
-## Learn More
+Run `supabase/migrations/0001_init.sql` once in the Supabase SQL Editor
+(Project → SQL Editor → New query). It creates the `guests` table, indexes,
+locks the table down with RLS (only the service role key can touch it — the
+browser never talks to Supabase directly), and a `check_in_guest` function
+that does the check-in atomically so two scanners can't double-check-in the
+same guest.
 
-To learn more about Next.js, take a look at the following resources:
+## Editing the wedding details
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Placeholder names/date/time/venue live in [`src/lib/wedding-config.ts`](src/lib/wedding-config.ts).
+The WhatsApp message template is also there.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploying to Vercel
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push this repo to GitHub.
+2. Import it in Vercel.
+3. Add the same environment variables as above in Vercel → Project Settings → Environment Variables.
+4. Deploy. Camera-based scanning requires HTTPS, which Vercel provides automatically.
